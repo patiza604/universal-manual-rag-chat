@@ -41,7 +41,7 @@ Universal Manual RAG Chat is a cutting-edge AI customer support system that tran
 
 ```bash
 # Clone and navigate
-git clone https://github.com/YOUR_USERNAME/universal-manual-rag-chat.git
+git clone https://github.com/patiza604/universal-manual-rag-chat.git
 cd universal-manual-rag-chat/chatbot_backend
 
 # Install dependencies
@@ -283,15 +283,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/universal-manual-rag-chat/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/YOUR_USERNAME/universal-manual-rag-chat/discussions)
-- **Documentation**: [Project Wiki](https://github.com/YOUR_USERNAME/universal-manual-rag-chat/wiki)
+- **Issues**: [GitHub Issues](https://github.com/patiza604/universal-manual-rag-chat/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/patiza604/universal-manual-rag-chat/discussions)
+- **Documentation**: [Project Wiki](https://github.com/patiza604/universal-manual-rag-chat/wiki)
 
 ---
 
 <div align="center">
 
-**[⭐ Star this repo](https://github.com/YOUR_USERNAME/universal-manual-rag-chat) if you find it helpful!**
+**[⭐ Star this repo](https://github.com/patiza604/universal-manual-rag-chat) if you find it helpful!**
 
 Made with ❤️ by the Universal Manual RAG Chat team
 

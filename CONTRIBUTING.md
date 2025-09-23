@@ -6,7 +6,7 @@ Thank you for your interest in contributing to Universal Manual RAG Chat! We wel
 
 ### 🐛 Reporting Bugs
 
-Before creating bug reports, please check the [existing issues](https://github.com/YOUR_USERNAME/universal-manual-rag-chat/issues) to avoid duplicates. When creating a bug report, include:
+Before creating bug reports, please check the [existing issues](https://github.com/patiza604/universal-manual-rag-chat/issues) to avoid duplicates. When creating a bug report, include:
 
 - **Clear description** of the issue
 - **Steps to reproduce** the behavior
@@ -18,7 +18,7 @@ Before creating bug reports, please check the [existing issues](https://github.c
 
 We love feature suggestions! Please:
 
-1. Check [existing feature requests](https://github.com/YOUR_USERNAME/universal-manual-rag-chat/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
+1. Check [existing feature requests](https://github.com/patiza604/universal-manual-rag-chat/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
 2. Create a detailed issue with:
    - **Problem description** - What need does this address?
    - **Proposed solution** - How should it work?
@@ -31,7 +31,7 @@ We love feature suggestions! Please:
 
 1. **Fork the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/universal-manual-rag-chat.git
+git clone https://github.com/patiza604/universal-manual-rag-chat.git
 cd universal-manual-rag-chat
 ```
 
