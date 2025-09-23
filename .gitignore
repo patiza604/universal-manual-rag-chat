@@ -237,3 +237,6 @@ Thumbs.db
 # AI model outputs
 generated_content/
 model_outputs/
+
+# Screenshots and images
+screenshots/
