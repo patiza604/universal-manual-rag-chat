@@ -1,0 +1,208 @@
+# Universal Manual Processing Configuration
+# This file configures how different types of manuals are processed for customer support RAG
+
+# Default chunking strategy - works for most manuals
+default_strategy:
+  # Chunk size limits (in characters)
+  quick_facts_max_chars: 150      # L0 chunks - LED meanings, specs
+  procedure_summary_max_chars: 400 # L2 chunks - procedure overviews
+  detailed_section_max_chars: 2000 # L1 chunks - full sections
+  qa_chunk_max_chars: 300         # QA chunks - question-answer pairs
+  cross_ref_max_chars: 800        # L4 chunks - related content combined
+
+  # Content extraction priorities (high/medium/low)
+  extraction_priorities:
+    status_indicators: high       # Critical for tech support
+    procedures: high             # Core manual content
+    troubleshooting: high        # Essential for support
+    specifications: medium       # Good for reference
+    safety_warnings: high        # Important for liability
+
+# Domain-specific configurations
+domain_configs:
+  electronics:
+    # Router, modem, smart devices, computers, etc.
+    boost_patterns:
+      - 'LED|light|indicator'
+      - 'WiFi|ethernet|network|connection'
+      - 'power|battery|charge'
+      - 'sync|pair|connect'
+
+    status_mechanisms:
+      - 'LED lights'
+      - 'display screens'
+      - 'audio beeps'
+      - 'network indicators'
+
+    common_user_terms:
+      LED: ['light', 'indicator', 'lamp']
+      router: ['main unit', 'base station', 'hub', 'box']
+      ethernet: ['cable', 'wired connection', 'cord']
+      WiFi: ['wireless', 'internet', 'network']
+      sync: ['connect', 'pair', 'link']
+      reset: ['restart', 'reboot']
+
+  automotive:
+    # Cars, trucks, motorcycles, etc.
+    boost_patterns:
+      - 'dashboard|instrument|gauge'
+      - 'engine|motor|transmission'
+      - 'brake|tire|wheel'
+      - 'warning|alert|light'
+
+    status_mechanisms:
+      - 'dashboard lights'
+      - 'warning indicators'
+      - 'gauge readings'
+      - 'audio alerts'
+
+    common_user_terms:
+      dashboard: ['dash', 'instrument panel']
+      transmission: ['gear box', 'gears']
+      brake: ['brakes', 'stopping system']
+      ignition: ['key', 'start button']
+
+  appliance:
+    # Washing machines, dryers, dishwashers, etc.
+    boost_patterns:
+      - 'cycle|program|setting'
+      - 'temperature|heat|wash'
+      - 'filter|drain|water'
+      - 'error|code|display'
+
+    status_mechanisms:
+      - 'LED displays'
+      - 'digital screens'
+      - 'control panels'
+      - 'audio signals'
+
+    common_user_terms:
+      cycle: ['program', 'setting', 'mode']
+      filter: ['screen', 'strainer']
+      temperature: ['temp', 'heat setting']
+
+  software:
+    # Applications, websites, mobile apps, etc.
+    boost_patterns:
+      - 'click|tap|select|choose'
+      - 'menu|button|screen|window'
+      - 'install|download|update'
+      - 'login|account|password'
+
+    status_mechanisms:
+      - 'status bars'
+      - 'notifications'
+      - 'progress indicators'
+      - 'error messages'
+
+    common_user_terms:
+      application: ['app', 'program', 'software']
+      interface: ['screen', 'window', 'page']
+      configure: ['setup', 'set up', 'adjust']
+
+# Question generation settings
+question_generation:
+  max_questions_per_chunk: 5
+  include_synonyms: true
+  difficulty_levels: ['beginner', 'intermediate', 'advanced']
+
+  # Question templates by content type
+  templates:
+    status_indicator:
+      - "What does {indicator} mean?"
+      - "Why is {indicator} {state}?"
+      - "Is {state} {indicator} normal?"
+
+    procedure:
+      - "How do I {action}?"
+      - "What's the first step to {action}?"
+      - "How long does {procedure} take?"
+
+    troubleshooting:
+      - "What do I do if {problem}?"
+      - "How do I fix {issue}?"
+      - "Why is {problem} happening?"
+
+    specification:
+      - "What is the {spec_name}?"
+      - "Does this support {feature}?"
+      - "What are the requirements?"
+
+# Metadata enhancement settings
+metadata_enhancement:
+  # Time estimation rules (in minutes)
+  time_estimates:
+    status_indicator: 0.5
+    specification: 0.5
+    procedure_step: 1-2
+    procedure_summary: 3-5
+    troubleshooting: 5-10
+    safety_warning: 1
+
+  # Difficulty assessment weights
+  difficulty_weights:
+    word_count: 0.2      # Longer = harder
+    technical_terms: 0.3  # More tech terms = harder
+    step_count: 0.2      # More steps = harder
+    prerequisites: 0.3    # More prereqs = harder
+
+  # Support categorization
+  support_categories:
+    setup: ['setup', 'install', 'initial', 'first time', 'getting started']
+    troubleshooting: ['problem', 'error', 'fix', 'issue', 'fault', 'troubleshoot']
+    maintenance: ['maintain', 'clean', 'care', 'service', 'regular', 'replace']
+    operation: ['use', 'operate', 'control', 'manage', 'run']
+    information: ['about', 'overview', 'description', 'feature', 'capability']
+
+# Multi-level chunking configuration
+chunking_levels:
+  L0: # Quick Facts (status indicators, key specs)
+    target_length: 50-150
+    content_types: ['status_indicator', 'specification', 'safety_warning']
+    priority: 'immediate_answers'
+
+  L1: # Standard Sections (current implementation)
+    target_length: 500-2000
+    content_types: ['section_content']
+    priority: 'comprehensive_coverage'
+
+  L2: # Procedure Summaries
+    target_length: 200-400
+    content_types: ['procedure_summary', 'troubleshooting_overview']
+    priority: 'quick_guidance'
+
+  QA: # Question-Answer Pairs
+    target_length: 100-300
+    content_types: ['procedure_step', 'quick_answer']
+    priority: 'direct_response'
+
+  L3: # Document Summary (current implementation)
+    target_length: 500-1000
+    content_types: ['document_overview']
+    priority: 'context_setting'
+
+  L4: # Cross-Reference Chunks
+    target_length: 300-800
+    content_types: ['related_procedures', 'workflow_chains']
+    priority: 'comprehensive_guidance'
+
+# Quality control settings
+quality_control:
+  min_confidence_threshold: 0.6
+  max_chunks_per_section: 15
+  require_user_questions: true
+  require_success_indicators: true
+
+  # Validation rules
+  validation:
+    check_question_relevance: true
+    validate_time_estimates: true
+    ensure_escalation_paths: true
+    verify_prerequisites: true
+
+# Output formatting
+output_format:
+  include_debug_info: false
+  preserve_original_chunks: true  # Keep L1 chunks from current system
+  add_navigation_metadata: true
+  generate_cross_references: true

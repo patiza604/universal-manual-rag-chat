@@ -1,0 +1,43 @@
+type User @table {
+  displayName: String!
+  createdAt: Timestamp!
+  email: String
+  photoUrl: String
+}
+
+type Agent @table {
+  user: User
+  name: String!
+  personality: String!
+  createdAt: Timestamp!
+  purpose: String
+  knowledgeBase: String
+  isPublic: Boolean
+}
+
+type Conversation @table {
+  user: User
+  agent: Agent
+  startedAt: Timestamp!
+  lastActivityAt: Timestamp
+}
+
+type Message @table {
+  conversation: Conversation
+  text: String!
+  timestamp: Timestamp!
+  sender: String!
+}
+
+type AgentShare @table {
+  agent: Agent
+  sharedAt: Timestamp!
+}
+
+type AgentRating @table {
+  user: User
+  agent: Agent
+  score: Int!
+  ratedAt: Timestamp!
+  comment: String
+}

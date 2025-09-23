@@ -1,0 +1,102 @@
+mutation SeedDatabase @auth(level: NO_ACCESS) {
+  user_upsertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      createdAt: "2024-03-15T12:00:00Z",
+      displayName: "Seed User 1",
+      email: "seeduser1@example.com",
+      photoUrl: "http://example.com/seeduser1.jpg"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      createdAt: "2024-03-15T13:00:00Z",
+      displayName: "Seed User 2",
+      email: "seeduser2@example.com",
+      photoUrl: "http://example.com/seeduser2.jpg"
+    }
+  ])
+  agent_upsertMany(data: [
+    {
+      id: "650e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      createdAt: "2024-03-15T14:00:00Z",
+      isPublic: true,
+      knowledgeBase: "Seed Agent 1 KB",
+      name: "Seed Agent 1",
+      personality: "Helpful",
+      purpose: "Testing"
+    },
+    {
+      id: "650e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      createdAt: "2024-03-15T15:00:00Z",
+      isPublic: false,
+      knowledgeBase: "Seed Agent 2 KB",
+      name: "Seed Agent 2",
+      personality: "Friendly",
+      purpose: "Training"
+    }
+  ])
+  conversation_upsertMany(data: [
+    {
+      id: "750e8400-e29b-41d4-a716-446655440000",
+      agentId: "650e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      lastActivityAt: "2024-03-15T16:00:00Z",
+      startedAt: "2024-03-15T16:00:00Z"
+    },
+    {
+      id: "750e8400-e29b-41d4-a716-446655440001",
+      agentId: "650e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      lastActivityAt: "2024-03-15T17:00:00Z",
+      startedAt: "2024-03-15T17:00:00Z"
+    }
+  ])
+  message_upsertMany(data: [
+    {
+      id: "850e8400-e29b-41d4-a716-446655440000",
+      conversationId: "750e8400-e29b-41d4-a716-446655440000",
+      sender: "user",
+      text: "Hello Agent 1",
+      timestamp: "2024-03-15T18:00:00Z"
+    },
+    {
+      id: "850e8400-e29b-41d4-a716-446655440001",
+      conversationId: "750e8400-e29b-41d4-a716-446655440001",
+      sender: "agent",
+      text: "Hello User 2",
+      timestamp: "2024-03-15T19:00:00Z"
+    }
+  ])
+  agentRating_upsertMany(data: [
+    {
+      id: "950e8400-e29b-41d4-a716-446655440000",
+      agentId: "650e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      comment: "Good agent",
+      ratedAt: "2024-03-15T20:00:00Z",
+      score: 5
+    },
+    {
+      id: "950e8400-e29b-41d4-a716-446655440001",
+      agentId: "650e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      comment: "Great agent",
+      ratedAt: "2024-03-15T21:00:00Z",
+      score: 4
+    }
+  ])
+  agentShare_upsertMany(data: [
+    {
+      id: "a50e8400-e29b-41d4-a716-446655440000",
+      agentId: "650e8400-e29b-41d4-a716-446655440000",
+      sharedAt: "2024-03-15T22:00:00Z"
+    },
+    {
+      id: "a50e8400-e29b-41d4-a716-446655440001",
+      agentId: "650e8400-e29b-41d4-a716-446655440001",
+      sharedAt: "2024-03-15T23:00:00Z"
+    }
+  ])
+}

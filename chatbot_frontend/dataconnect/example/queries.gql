@@ -1,0 +1,40 @@
+mutation CreateNewAgent($name: String!, $personality: String!, $knowledgeBase: String, $purpose: String, $isPublic: Boolean) @auth(level: USER) {
+  agent_insert(data: {
+    name: $name,
+    personality: $personality,
+    knowledgeBase: $knowledgeBase,
+    purpose: $purpose,
+    isPublic: $isPublic,
+    userId_expr: "auth.uid",
+    createdAt_expr: "request.time"
+  })
+}
+
+query GetMyAgents @auth(level: USER) {
+  agents(where: {userId: {eq_expr: "auth.uid"}}) {
+    id
+    name
+    personality
+    knowledgeBase
+    purpose
+    isPublic
+    createdAt
+  }
+}
+
+mutation UpdateAgent($id: UUID!, $name: String, $personality: String, $knowledgeBase: String, $purpose: String, $isPublic: Boolean) @auth(level: USER) {
+  agent_update(
+    key: {id: $id}
+    data: {
+      name: $name,
+      personality: $personality,
+      knowledgeBase: $knowledgeBase,
+      purpose: $purpose,
+      isPublic: $isPublic
+    }
+  )
+}
+
+mutation DeleteAgent($id: UUID!) @auth(level: USER) {
+  agent_delete(key: {id: $id})
+}

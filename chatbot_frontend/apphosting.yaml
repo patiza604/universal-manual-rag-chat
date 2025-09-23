@@ -1,0 +1,16 @@
+runConfig:
+  concurrency: 1000
+  cpu: 1
+  maxInstances: 100
+  memory: 512MiB
+  minInstances: 0
+
+env:
+  - variable: BUILD_ENV
+    value: production
+
+# Build configuration for Flutter Web
+build:
+  commands:
+    - flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://unpkg.com/canvaskit-wasm@0.38.0/bin/
+  publishDir: build/web

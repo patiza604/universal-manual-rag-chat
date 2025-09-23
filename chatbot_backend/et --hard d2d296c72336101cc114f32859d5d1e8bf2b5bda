@@ -1,0 +1,378 @@
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{0}: commit (amend): Minor changes, ready to commit
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{1}: commit (amend): Minor changes, ready to commit
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{2}: commit (amend): Minor changes, ready to commit
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{3}: commit (amend): Minor changes, ready to commit
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{4}: commit (amend): Minor changes, ready to commit
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{5}: commit (amend): Minor changes, ready to commit
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{6}: commit (amend): Minor changes, ready to commit
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{7}: rebase (continue) (finish): returning to refs/heads/vectorindexupgrade
+[33m9b47bb0[m[33m ([m[1;36mHEAD -> [m[1;32mvectorindexupgrade[m[33m)[m HEAD@{8}: commit (amend): Minor changes, ready to commit
+[33ma32f112[m HEAD@{9}: rebase (continue) (edit): Minor changes, ready to commit
+[33m8db4ea6[m HEAD@{10}: commit (amend): Everything works with FAISS
+[33m035a6f8[m HEAD@{11}: rebase (continue) (edit): Everything works with FAISS
+[33m0fe902d[m HEAD@{12}: commit (amend): Works but cannot retrieve images
+[33mcf6c2d7[m HEAD@{13}: rebase (continue) (edit): Works but cannot retrieve images
+[33m2db8767[m HEAD@{14}: commit (amend): Vector Index Upgrade Complete still needs Debugging
+[33m1dce536[m HEAD@{15}: rebase (continue) (edit): Vector Index Upgrade Complete still needs Debugging
+[33mbd6b65e[m HEAD@{16}: commit (amend): Debugged code, not finished, not working yet
+[33mabb1ebb[m HEAD@{17}: rebase (continue) (edit): Debugged code, not finished, not working yet
+[33mbbb6bb8[m HEAD@{18}: commit (amend): Added full update index walkthrough in README.md
+[33m8b9d3cd[m HEAD@{19}: rebase (continue) (edit): Added full update index walkthrough in README.md
+[33mfcfb6bb[m HEAD@{20}: commit (amend): Improved Vector Index Creation and Handling
+[33mb08382e[m HEAD@{21}: rebase (continue) (edit): Improved Vector Index Creation and Handling
+[33mb43f6f6[m HEAD@{22}: commit (amend): Cleaned up, deleted unused file, produced new README.md, merge done
+[33m0e60a14[m HEAD@{23}: rebase (continue) (edit): Cleaned up, deleted unused file, produced new README.md, merge done
+[33m98677cb[m HEAD@{24}: commit (amend): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33m8be1fcb[m HEAD@{25}: rebase (continue) (edit): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33m88178bf[m HEAD@{26}: commit (amend): Added adjustable embeddings quantity in config.py
+[33m0a85483[m HEAD@{27}: rebase (continue) (edit): Added adjustable embeddings quantity in config.py
+[33md89c7f4[m HEAD@{28}: commit (amend): Migration from Vertex to FAISS successfull
+[33m47a74ce[m HEAD@{29}: rebase (continue) (edit): Migration from Vertex to FAISS successfull
+[33m058235e[m HEAD@{30}: commit (amend): faiss works, integration with front end works, TTS not working
+[33md51dd86[m HEAD@{31}: rebase (continue) (edit): faiss works, integration with front end works, TTS not working
+[33m3ecfa7e[m HEAD@{32}: commit (amend): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33m5fb0e5c[m HEAD@{33}: rebase (continue) (edit): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33m6d5d0a5[m HEAD@{34}: commit (amend): FAIS works in Google Run with vecor index in GC bucket
+[33m705d136[m HEAD@{35}: rebase (continue) (edit): FAIS works in Google Run with vecor index in GC bucket
+[33mb46fc6f[m HEAD@{36}: commit (amend): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33m1f3c4da[m HEAD@{37}: rebase (continue) (edit): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33m95d8d32[m HEAD@{38}: commit (amend): Implemented FAISS ready to start testing
+[33md142132[m HEAD@{39}: rebase (continue) (edit): Implemented FAISS ready to start testing
+[33m580093f[m HEAD@{40}: commit (amend): Images retrievel and insrt in chat feed works
+[33m6410e3a[m HEAD@{41}: rebase (continue) (edit): Images retrievel and insrt in chat feed works
+[33m4b0606d[m HEAD@{42}: commit (amend): Changed response from backend from string to JSON
+[33m23c4b64[m HEAD@{43}: rebase (continue) (edit): Changed response from backend from string to JSON
+[33m2ccd3d6[m HEAD@{44}: commit (amend): Minor tweaks
+[33mbcc5fae[m HEAD@{45}: rebase (continue) (edit): Minor tweaks
+[33m87e2df5[m HEAD@{46}: commit (amend): Voice to Text working on Android and Chrome
+[33m5385266[m HEAD@{47}: rebase (continue) (edit): Voice to Text working on Android and Chrome
+[33m5869b1d[m HEAD@{48}: commit (amend): Voice to Text is working on Android and Chrome
+[33m32e90fb[m HEAD@{49}: rebase (continue) (edit): Voice to Text is working on Android and Chrome
+[33m0255131[m HEAD@{50}: commit (amend): Removed unnecessary files
+[33mef726bd[m HEAD@{51}: rebase (continue) (edit): Removed unnecessary files
+[33m3ea6f87[m HEAD@{52}: commit (amend): Removed unnecessary files
+[33m7e0630b[m HEAD@{53}: rebase (continue) (edit): Removed unnecessary files
+[33md83be34[m HEAD@{54}: commit (amend): Refactoring Successful
+[33m0ca39d0[m HEAD@{55}: rebase (continue) (edit): Refactoring Successful
+[33m8633e1e[m HEAD@{56}: commit (amend): Minor changes, chatbot still not working
+[33m1b7cdc1[m HEAD@{57}: rebase (continue) (edit): Minor changes, chatbot still not working
+[33me8bb9f0[m HEAD@{58}: commit (amend): Refactored in 19 files, chat bot not working
+[33m52142d5[m HEAD@{59}: rebase (continue) (edit): Refactored in 19 files, chat bot not working
+[33mcf8aeef[m HEAD@{60}: commit (amend): Voice to Text working in Chrome
+[33m5ba96c6[m HEAD@{61}: rebase (continue) (edit): Voice to Text working in Chrome
+[33mb2c0d43[m HEAD@{62}: commit (amend): Voice to Text working on Android
+[33mc62f367[m HEAD@{63}: rebase (continue) (edit): Voice to Text working on Android
+[33m6074a01[m HEAD@{64}: commit (amend): Many small tweaks
+[33m1d35a8c[m HEAD@{65}: rebase (continue) (edit): Many small tweaks
+[33m93ee7de[m HEAD@{66}: commit (amend): Fixed a few bugs, added voice selector
+[33mdb4e081[m HEAD@{67}: rebase (continue) (edit): Fixed a few bugs, added voice selector
+[33m7d44cd6[m HEAD@{68}: commit (amend): Text To Voice Works on web and android
+[33ma15008b[m HEAD@{69}: rebase (continue) (edit): Text To Voice Works on web and android
+[33m874bbfb[m HEAD@{70}: commit (amend): RAG Trained AI agent works on Chrome
+[33m2bc9688[m HEAD@{71}: rebase (continue) (edit): RAG Trained AI agent works on Chrome
+[33m8d6c1d4[m HEAD@{72}: commit (amend): Proper Vector Index Creation Implemented
+[33mf081a8f[m HEAD@{73}: rebase (continue) (edit): Proper Vector Index Creation Implemented
+[33ma672d16[m HEAD@{74}: commit (amend): RAG training works in deployed environment
+[33me0ce1cc[m HEAD@{75}: rebase (continue) (edit): RAG training works in deployed environment
+[33m7552bd5[m HEAD@{76}: commit (amend): RAG agent works need to feed it info
+[33m186c428[m HEAD@{77}: rebase (continue) (edit): RAG agent works need to feed it info
+[33m89e3dd4[m HEAD@{78}: commit (amend): RAG trained agent implementation almost complete
+[33m7206503[m HEAD@{79}: rebase (continue) (edit): RAG trained agent implementation almost complete
+[33mdf5cd28[m HEAD@{80}: commit (amend): AI chatbot working, only one instance.
+[33m204760b[m HEAD@{81}: rebase (continue) (edit): AI chatbot working, only one instance.
+[33m9692181[m HEAD@{82}: commit (amend): first commit to set up
+[33mffe1350[m HEAD@{83}: rebase: fast-forward
+[33md2d296c[m HEAD@{84}: rebase (start): checkout d2d296c72336101cc114f32859d5d1e8bf2b5bda
+[33m02c5d8a[m HEAD@{85}: rebase (continue) (finish): returning to refs/heads/vectorindexupgrade
+[33m02c5d8a[m HEAD@{86}: commit (amend): Minor changes, ready to commit
+[33mc383f48[m HEAD@{87}: rebase (continue) (edit): Minor changes, ready to commit
+[33m89616ed[m HEAD@{88}: commit (amend): Everything works with FAISS
+[33m21d82e5[m HEAD@{89}: rebase (continue) (edit): Everything works with FAISS
+[33md893185[m HEAD@{90}: commit (amend): Works but cannot retrieve images
+[33mbe047a1[m HEAD@{91}: rebase (continue) (edit): Works but cannot retrieve images
+[33m370b4aa[m HEAD@{92}: commit (amend): Vector Index Upgrade Complete still needs Debugging
+[33mffe901b[m HEAD@{93}: rebase (continue) (edit): Vector Index Upgrade Complete still needs Debugging
+[33me6e6d71[m HEAD@{94}: commit (amend): Debugged code, not finished, not working yet
+[33md96eea8[m HEAD@{95}: rebase (continue) (edit): Debugged code, not finished, not working yet
+[33me24673f[m HEAD@{96}: commit (amend): Added full update index walkthrough in README.md
+[33m438222a[m HEAD@{97}: rebase (continue) (edit): Added full update index walkthrough in README.md
+[33m63f91ce[m HEAD@{98}: commit (amend): Improved Vector Index Creation and Handling
+[33mcca0551[m HEAD@{99}: rebase (continue) (edit): Improved Vector Index Creation and Handling
+[33m86eb1bd[m HEAD@{100}: commit (amend): Cleaned up, deleted unused file, produced new README.md, merge done
+[33mc2ec648[m HEAD@{101}: rebase (continue) (edit): Cleaned up, deleted unused file, produced new README.md, merge done
+[33mf076567[m HEAD@{102}: commit (amend): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33m5f20558[m HEAD@{103}: rebase (continue) (edit): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33m1ea72ba[m HEAD@{104}: commit (amend): Added adjustable embeddings quantity in config.py
+[33m7e05379[m HEAD@{105}: rebase (continue) (edit): Added adjustable embeddings quantity in config.py
+[33m306b39e[m HEAD@{106}: commit (amend): Migration from Vertex to FAISS successfull
+[33m4a7106b[m HEAD@{107}: rebase (continue) (edit): Migration from Vertex to FAISS successfull
+[33ma3d6f4a[m HEAD@{108}: commit (amend): faiss works, integration with front end works, TTS not working
+[33mb0b6bb0[m HEAD@{109}: rebase (continue) (edit): faiss works, integration with front end works, TTS not working
+[33mc75e1ec[m HEAD@{110}: commit (amend): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33mbe65c4a[m HEAD@{111}: rebase (continue) (edit): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33ma087b62[m HEAD@{112}: commit (amend): FAIS works in Google Run with vecor index in GC bucket
+[33m9e6391e[m HEAD@{113}: rebase (continue) (edit): FAIS works in Google Run with vecor index in GC bucket
+[33macf221e[m HEAD@{114}: commit (amend): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33m56f8fff[m HEAD@{115}: rebase (continue) (edit): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33m2887f30[m HEAD@{116}: commit (amend): Implemented FAISS ready to start testing
+[33md11c06b[m HEAD@{117}: rebase (continue) (edit): Implemented FAISS ready to start testing
+[33m9a3c4c4[m HEAD@{118}: commit (amend): Images retrievel and insrt in chat feed works
+[33m0356c4e[m HEAD@{119}: rebase (continue) (edit): Images retrievel and insrt in chat feed works
+[33m55f16d0[m HEAD@{120}: commit (amend): Changed response from backend from string to JSON
+[33mb21ba20[m HEAD@{121}: rebase (continue) (edit): Changed response from backend from string to JSON
+[33m235cb7f[m HEAD@{122}: commit (amend): Minor tweaks
+[33ma54cbaa[m HEAD@{123}: rebase (continue) (edit): Minor tweaks
+[33mb671cb9[m HEAD@{124}: commit (amend): Voice to Text working on Android and Chrome
+[33mf5d649c[m HEAD@{125}: rebase (continue) (edit): Voice to Text working on Android and Chrome
+[33m31d87d4[m HEAD@{126}: commit (amend): Voice to Text is working on Android and Chrome
+[33mb54f06b[m HEAD@{127}: rebase (continue) (edit): Voice to Text is working on Android and Chrome
+[33m17a913c[m HEAD@{128}: commit (amend): Removed unnecessary files
+[33m98a39e4[m HEAD@{129}: rebase (continue) (edit): Removed unnecessary files
+[33m014d3c6[m HEAD@{130}: commit (amend): Removed unnecessary files
+[33m9a80e7e[m HEAD@{131}: rebase (continue) (edit): Removed unnecessary files
+[33mdbc270a[m HEAD@{132}: commit (amend): Refactoring Successful
+[33m6a2d9ff[m HEAD@{133}: rebase (continue) (edit): Refactoring Successful
+[33mdd7ccab[m HEAD@{134}: commit (amend): Minor changes, chatbot still not working
+[33m3762ee1[m HEAD@{135}: rebase (continue) (edit): Minor changes, chatbot still not working
+[33mf993f4e[m HEAD@{136}: commit (amend): Refactored in 19 files, chat bot not working
+[33mb1af549[m HEAD@{137}: rebase (continue) (edit): Refactored in 19 files, chat bot not working
+[33m8454acd[m HEAD@{138}: commit (amend): Voice to Text working in Chrome
+[33m44c9538[m HEAD@{139}: rebase (continue) (edit): Voice to Text working in Chrome
+[33m1834bf7[m HEAD@{140}: commit (amend): Voice to Text working on Android
+[33m5f30f7b[m HEAD@{141}: rebase (continue) (edit): Voice to Text working on Android
+[33m94f983f[m HEAD@{142}: commit (amend): Many small tweaks
+[33m36439fb[m HEAD@{143}: rebase (continue) (edit): Many small tweaks
+[33m00e8ed9[m HEAD@{144}: commit (amend): Fixed a few bugs, added voice selector
+[33m2f93cae[m HEAD@{145}: rebase (continue) (edit): Fixed a few bugs, added voice selector
+[33maeec81a[m HEAD@{146}: commit (amend): Text To Voice Works on web and android
+[33m527ae55[m HEAD@{147}: rebase (continue) (edit): Text To Voice Works on web and android
+[33m7180b31[m HEAD@{148}: commit (amend): RAG Trained AI agent works on Chrome
+[33m14f51e0[m HEAD@{149}: rebase (continue) (edit): RAG Trained AI agent works on Chrome
+[33m1804edf[m HEAD@{150}: commit (amend): Proper Vector Index Creation Implemented
+[33m20c9890[m HEAD@{151}: rebase (continue) (edit): Proper Vector Index Creation Implemented
+[33m94e9f88[m HEAD@{152}: commit (amend): RAG training works in deployed environment
+[33maf69268[m HEAD@{153}: rebase (continue) (edit): RAG training works in deployed environment
+[33m68f28af[m HEAD@{154}: commit (amend): RAG agent works need to feed it info
+[33m31329ff[m HEAD@{155}: rebase (continue) (edit): RAG agent works need to feed it info
+[33m3003063[m HEAD@{156}: commit (amend): RAG trained agent implementation almost complete
+[33m0c12c60[m HEAD@{157}: rebase (continue) (edit): RAG trained agent implementation almost complete
+[33m032f091[m HEAD@{158}: commit (amend): AI chatbot working, only one instance.
+[33meeb30ce[m HEAD@{159}: rebase (continue) (edit): AI chatbot working, only one instance.
+[33mffe1350[m HEAD@{160}: commit (amend): first commit to set up
+[33me156f46[m HEAD@{161}: rebase: fast-forward
+[33mdcb6e57[m HEAD@{162}: rebase (start): checkout dcb6e57193788c70444fa41c8c9c0b452c55276f
+[33m9f7fccb[m HEAD@{163}: rebase (abort): updating HEAD
+[33me156f46[m HEAD@{164}: rebase: fast-forward
+[33ma44807d[m HEAD@{165}: rebase (start): checkout a44807da2c54f95f989c66afddbea5b8c63b9fe8
+[33m9f7fccb[m HEAD@{166}: rebase (continue) (finish): returning to refs/heads/vectorindexupgrade
+[33m9f7fccb[m HEAD@{167}: commit (amend): Minor changes, ready to commit
+[33mb53c1c6[m HEAD@{168}: rebase (continue) (edit): Minor changes, ready to commit
+[33m569b69e[m HEAD@{169}: commit (amend): Everything works with FAISS
+[33m92a38c0[m HEAD@{170}: rebase (continue) (edit): Everything works with FAISS
+[33m8539879[m HEAD@{171}: commit (amend): Works but cannot retrieve images
+[33m08a04fe[m HEAD@{172}: rebase (continue) (edit): Works but cannot retrieve images
+[33m2bc92e6[m HEAD@{173}: commit (amend): Vector Index Upgrade Complete still needs Debugging
+[33m3447104[m HEAD@{174}: rebase (continue) (edit): Vector Index Upgrade Complete still needs Debugging
+[33maf7fa85[m HEAD@{175}: commit (amend): Debugged code, not finished, not working yet
+[33md5e3740[m HEAD@{176}: rebase (continue) (edit): Debugged code, not finished, not working yet
+[33m8fb14d1[m HEAD@{177}: commit (amend): Added full update index walkthrough in README.md
+[33mb0e0d68[m HEAD@{178}: rebase (continue) (edit): Added full update index walkthrough in README.md
+[33mfa9c5c6[m HEAD@{179}: commit (amend): Improved Vector Index Creation and Handling
+[33m1063bdd[m HEAD@{180}: rebase (continue) (edit): Improved Vector Index Creation and Handling
+[33mbcd2c78[m HEAD@{181}: commit (amend): Cleaned up, deleted unused file, produced new README.md, merge done
+[33mcf14424[m HEAD@{182}: rebase (continue) (edit): Cleaned up, deleted unused file, produced new README.md, merge done
+[33mc305f43[m HEAD@{183}: commit (amend): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33m3a2a2fb[m HEAD@{184}: rebase (continue) (edit): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33mcd83b7a[m HEAD@{185}: commit (amend): Added adjustable embeddings quantity in config.py
+[33ma791b3e[m HEAD@{186}: rebase (continue) (edit): Added adjustable embeddings quantity in config.py
+[33m31247e6[m HEAD@{187}: commit (amend): Migration from Vertex to FAISS successfull
+[33me4f9b48[m HEAD@{188}: rebase (continue) (edit): Migration from Vertex to FAISS successfull
+[33m374b14b[m HEAD@{189}: commit (amend): faiss works, integration with front end works, TTS not working
+[33m44dbb5b[m HEAD@{190}: rebase (continue) (edit): faiss works, integration with front end works, TTS not working
+[33m8382e9a[m HEAD@{191}: commit (amend): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33m265bbbe[m HEAD@{192}: rebase (continue) (edit): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33m70e6469[m HEAD@{193}: commit (amend): FAIS works in Google Run with vecor index in GC bucket
+[33m78a78a1[m HEAD@{194}: rebase (continue) (edit): FAIS works in Google Run with vecor index in GC bucket
+[33m106aaed[m HEAD@{195}: commit (amend): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33m0ddbd21[m HEAD@{196}: rebase (continue) (edit): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33m9b22fdb[m HEAD@{197}: commit (amend): Implemented FAISS ready to start testing
+[33mc2e156e[m HEAD@{198}: rebase (continue) (edit): Implemented FAISS ready to start testing
+[33m46a5ed9[m HEAD@{199}: commit (amend): Images retrievel and insrt in chat feed works
+[33m1913fad[m HEAD@{200}: rebase (continue) (edit): Images retrievel and insrt in chat feed works
+[33m1f162cf[m HEAD@{201}: commit (amend): Changed response from backend from string to JSON
+[33mdef5538[m HEAD@{202}: rebase (continue) (edit): Changed response from backend from string to JSON
+[33m1cc2dc5[m HEAD@{203}: commit (amend): Minor tweaks
+[33m1973b8b[m HEAD@{204}: rebase (continue) (edit): Minor tweaks
+[33m9d68e75[m HEAD@{205}: commit (amend): Voice to Text working on Android and Chrome
+[33mf9017e9[m HEAD@{206}: rebase (continue) (edit): Voice to Text working on Android and Chrome
+[33ma44a98d[m HEAD@{207}: commit (amend): Voice to Text is working on Android and Chrome
+[33m2f4accd[m HEAD@{208}: rebase (continue) (edit): Voice to Text is working on Android and Chrome
+[33ma064a73[m HEAD@{209}: commit (amend): Removed unnecessary files
+[33m93c115f[m HEAD@{210}: rebase (continue) (edit): Removed unnecessary files
+[33m97ef7e3[m HEAD@{211}: commit (amend): Removed unnecessary files
+[33ma5f26de[m HEAD@{212}: rebase (continue) (edit): Removed unnecessary files
+[33m4c1b484[m HEAD@{213}: commit (amend): Refactoring Successful
+[33m5496084[m HEAD@{214}: rebase (continue) (edit): Refactoring Successful
+[33m5dd8006[m HEAD@{215}: commit (amend): Minor changes, chatbot still not working
+[33m6580888[m HEAD@{216}: rebase (continue) (edit): Minor changes, chatbot still not working
+[33m0c5c82e[m HEAD@{217}: commit (amend): Refactored in 19 files, chat bot not working
+[33m532bcfb[m HEAD@{218}: rebase (continue) (edit): Refactored in 19 files, chat bot not working
+[33m16f2945[m HEAD@{219}: commit (amend): Voice to Text working in Chrome
+[33mb085fb8[m HEAD@{220}: rebase (continue) (edit): Voice to Text working in Chrome
+[33ma16c917[m HEAD@{221}: commit (amend): Voice to Text working on Android
+[33mdda4b0b[m HEAD@{222}: rebase (continue) (edit): Voice to Text working on Android
+[33m93f37e3[m HEAD@{223}: commit (amend): Many small tweaks
+[33m1132d39[m HEAD@{224}: rebase (continue) (edit): Many small tweaks
+[33mb7374b3[m HEAD@{225}: commit (amend): Fixed a few bugs, added voice selector
+[33m104f6d0[m HEAD@{226}: rebase (continue) (edit): Fixed a few bugs, added voice selector
+[33m11537e3[m HEAD@{227}: commit (amend): Text To Voice Works on web and android
+[33ma05a4b0[m HEAD@{228}: rebase (continue) (edit): Text To Voice Works on web and android
+[33m67b3658[m HEAD@{229}: commit (amend): RAG Trained AI agent works on Chrome
+[33m7dcd0f6[m HEAD@{230}: rebase (continue) (edit): RAG Trained AI agent works on Chrome
+[33me1e9af4[m HEAD@{231}: commit (amend): Proper Vector Index Creation Implemented
+[33m8056d35[m HEAD@{232}: rebase (continue) (edit): Proper Vector Index Creation Implemented
+[33m90bb87d[m HEAD@{233}: commit (amend): RAG training works in deployed environment
+[33m06f6897[m HEAD@{234}: rebase (continue) (edit): RAG training works in deployed environment
+[33m3de2d19[m HEAD@{235}: commit (amend): RAG agent works need to feed it info
+[33m4a359a4[m HEAD@{236}: rebase (continue) (edit): RAG agent works need to feed it info
+[33m03ae482[m HEAD@{237}: commit (amend): RAG trained agent implementation almost complete
+[33meb1c03a[m HEAD@{238}: rebase (continue) (edit): RAG trained agent implementation almost complete
+[33mcb2ce5c[m HEAD@{239}: commit (amend): AI chatbot working, only one instance.
+[33m9485c6b[m HEAD@{240}: rebase (continue) (edit): AI chatbot working, only one instance.
+[33me156f46[m HEAD@{241}: commit (amend): first commit to set up
+[33mb589abe[m HEAD@{242}: rebase: fast-forward
+[33m0d53d79[m HEAD@{243}: rebase (start): checkout 0d53d796deb647f15b0320afa63bad5187d59591
+[33mc763f23[m HEAD@{244}: rebase (abort): updating HEAD
+[33mb589abe[m HEAD@{245}: rebase: fast-forward
+[33m0c90406[m HEAD@{246}: rebase (start): checkout 0c904067ac7b6b3cce18982438f02af7c6c9b021
+[33mc763f23[m HEAD@{247}: rebase (continue) (finish): returning to refs/heads/vectorindexupgrade
+[33mc763f23[m HEAD@{248}: commit (amend): Minor changes, ready to commit
+[33m52b6c23[m HEAD@{249}: rebase (continue) (edit): Minor changes, ready to commit
+[33me720fcb[m HEAD@{250}: commit (amend): Everything works with FAISS
+[33m69f2f96[m HEAD@{251}: rebase (continue) (edit): Everything works with FAISS
+[33mb4cadbf[m HEAD@{252}: commit (amend): Works but cannot retrieve images
+[33m0e7b2bf[m HEAD@{253}: rebase (continue) (edit): Works but cannot retrieve images
+[33m97e22ad[m HEAD@{254}: commit (amend): Vector Index Upgrade Complete still needs Debugging
+[33m1f4b2bd[m HEAD@{255}: rebase (continue) (edit): Vector Index Upgrade Complete still needs Debugging
+[33mf341469[m HEAD@{256}: commit (amend): Debugged code, not finished, not working yet
+[33m95505bf[m HEAD@{257}: rebase (continue) (edit): Debugged code, not finished, not working yet
+[33m7796e96[m HEAD@{258}: commit (amend): Added full update index walkthrough in README.md
+[33mf1366c3[m HEAD@{259}: rebase (continue) (edit): Added full update index walkthrough in README.md
+[33m721e2be[m HEAD@{260}: commit (amend): Improved Vector Index Creation and Handling
+[33mfe85b2b[m HEAD@{261}: rebase (continue) (edit): Improved Vector Index Creation and Handling
+[33md89dc2a[m HEAD@{262}: commit (amend): Cleaned up, deleted unused file, produced new README.md, merge done
+[33mf78df3f[m HEAD@{263}: rebase (continue) (edit): Cleaned up, deleted unused file, produced new README.md, merge done
+[33mb8d1c67[m HEAD@{264}: commit (amend): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33mffc82b3[m HEAD@{265}: rebase (continue) (edit): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33m82fb8bb[m HEAD@{266}: commit (amend): Added adjustable embeddings quantity in config.py
+[33m35c6a23[m HEAD@{267}: rebase (continue) (edit): Added adjustable embeddings quantity in config.py
+[33m498ee1c[m HEAD@{268}: commit (amend): Migration from Vertex to FAISS successfull
+[33mf7fe99b[m HEAD@{269}: rebase (continue) (edit): Migration from Vertex to FAISS successfull
+[33m5dc4d51[m HEAD@{270}: commit (amend): faiss works, integration with front end works, TTS not working
+[33mec6e2e5[m HEAD@{271}: rebase (continue) (edit): faiss works, integration with front end works, TTS not working
+[33maf23134[m HEAD@{272}: commit (amend): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33m5d4af7b[m HEAD@{273}: rebase (continue) (edit): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33m906950f[m HEAD@{274}: commit (amend): FAIS works in Google Run with vecor index in GC bucket
+[33m5a519a9[m HEAD@{275}: rebase (continue) (edit): FAIS works in Google Run with vecor index in GC bucket
+[33ma2a8629[m HEAD@{276}: commit (amend): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33m57df364[m HEAD@{277}: rebase (continue) (edit): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33me4d7ee6[m HEAD@{278}: commit (amend): Implemented FAISS ready to start testing
+[33mdebe831[m HEAD@{279}: rebase (continue) (edit): Implemented FAISS ready to start testing
+[33mabb3f09[m HEAD@{280}: commit (amend): Images retrievel and insrt in chat feed works
+[33m5717977[m HEAD@{281}: rebase (continue) (edit): Images retrievel and insrt in chat feed works
+[33m9c2ffe4[m HEAD@{282}: commit (amend): Changed response from backend from string to JSON
+[33mc559278[m HEAD@{283}: rebase (continue) (edit): Changed response from backend from string to JSON
+[33mdc4ad0d[m HEAD@{284}: commit (amend): Minor tweaks
+[33mec6a3a7[m HEAD@{285}: rebase (continue) (edit): Minor tweaks
+[33me4c3501[m HEAD@{286}: commit (amend): Voice to Text working on Android and Chrome
+[33me3ecbbd[m HEAD@{287}: rebase (continue) (edit): Voice to Text working on Android and Chrome
+[33ma3b3723[m HEAD@{288}: commit (amend): Voice to Text is working on Android and Chrome
+[33m3a692d7[m HEAD@{289}: rebase (continue) (edit): Voice to Text is working on Android and Chrome
+[33mbc551f1[m HEAD@{290}: commit (amend): Removed unnecessary files
+[33m1ba1390[m HEAD@{291}: rebase (continue) (edit): Removed unnecessary files
+[33m58f66cb[m HEAD@{292}: commit (amend): Removed unnecessary files
+[33m2bfae7d[m HEAD@{293}: rebase (continue) (edit): Removed unnecessary files
+[33m0a4199f[m HEAD@{294}: commit (amend): Refactoring Successful
+[33m9495fa3[m HEAD@{295}: rebase (continue) (edit): Refactoring Successful
+[33m2835a16[m HEAD@{296}: commit (amend): Minor changes, chatbot still not working
+[33m7c7475e[m HEAD@{297}: rebase (continue) (edit): Minor changes, chatbot still not working
+[33mc0efc96[m HEAD@{298}: commit (amend): Refactored in 19 files, chat bot not working
+[33m21df285[m HEAD@{299}: rebase (continue) (edit): Refactored in 19 files, chat bot not working
+[33ma9cb34e[m HEAD@{300}: commit (amend): Voice to Text working in Chrome
+[33me261876[m HEAD@{301}: rebase (continue) (edit): Voice to Text working in Chrome
+[33m538e62f[m HEAD@{302}: commit (amend): Voice to Text working on Android
+[33md2a91b4[m HEAD@{303}: rebase (continue) (edit): Voice to Text working on Android
+[33m9a7f3cf[m HEAD@{304}: commit (amend): Many small tweaks
+[33m38cd1a0[m HEAD@{305}: rebase (continue) (edit): Many small tweaks
+[33m135a6c2[m HEAD@{306}: commit (amend): Fixed a few bugs, added voice selector
+[33mfdd28f6[m HEAD@{307}: rebase (continue) (edit): Fixed a few bugs, added voice selector
+[33m07b448b[m HEAD@{308}: commit (amend): Text To Voice Works on web and android
+[33me6bb71d[m HEAD@{309}: rebase (continue) (edit): Text To Voice Works on web and android
+[33mcc78364[m HEAD@{310}: commit (amend): RAG Trained AI agent works on Chrome
+[33m73e2c1b[m HEAD@{311}: rebase (continue) (edit): RAG Trained AI agent works on Chrome
+[33mfe8721d[m HEAD@{312}: commit (amend): Proper Vector Index Creation Implemented
+[33m8c5f74c[m HEAD@{313}: rebase (continue) (edit): Proper Vector Index Creation Implemented
+[33m0e225c9[m HEAD@{314}: commit (amend): RAG training works in deployed environment
+[33m32a8bb3[m HEAD@{315}: rebase (continue) (edit): RAG training works in deployed environment
+[33mc6592dc[m HEAD@{316}: commit (amend): RAG agent works need to feed it info
+[33mc923408[m HEAD@{317}: rebase (continue) (edit): RAG agent works need to feed it info
+[33m7132815[m HEAD@{318}: commit (amend): RAG trained agent implementation almost complete
+[33m950336d[m HEAD@{319}: rebase (continue) (edit): RAG trained agent implementation almost complete
+[33maafbdb6[m HEAD@{320}: commit (amend): AI chatbot working, only one instance.
+[33mb7325cf[m HEAD@{321}: rebase (continue) (edit): AI chatbot working, only one instance.
+[33mb589abe[m HEAD@{322}: commit (amend): first commit to set up
+[33m110b9fc[m HEAD@{323}: rebase: fast-forward
+[33m8aad4dc[m HEAD@{324}: rebase (start): checkout 8aad4dcda68cbe88cdf3e4f59cdc43dc2d2f0776
+[33m81a1c54[m HEAD@{325}: rebase (finish): returning to refs/heads/vectorindexupgrade
+[33m81a1c54[m HEAD@{326}: rebase (reword): Minor changes, ready to commit
+[33m221286b[m HEAD@{327}: rebase (reword): Everything works with FAISS
+[33m0724a22[m HEAD@{328}: rebase (reword): Works but cannot retrieve images
+[33me3a0531[m HEAD@{329}: rebase (reword): Works but cannot retrieve images
+[33md82dd82[m HEAD@{330}: rebase (reword): Vector Index Upgrade Complete still needs Debugging
+[33m4312fd7[m HEAD@{331}: rebase (reword): Vector Index Upgrade Complete still needs Debugging
+[33m98c8b10[m HEAD@{332}: rebase (reword): Debugged code, not finished, not working yet
+[33m0f60982[m HEAD@{333}: rebase (reword): Debugged code, not finished, not working yet
+[33m52e0680[m HEAD@{334}: rebase (reword): Added full update index walkthrough in README.md
+[33mb0a1159[m HEAD@{335}: rebase (reword): Added full update index walkthrough in README.md plus added my_manual_content.md
+[33m22be0a6[m HEAD@{336}: rebase (reword): Improved Vector Index Creation and Handling
+[33m14693b1[m HEAD@{337}: rebase (reword): Cleaned up, deleted unused file, produced new README.md, merge done
+[33m985ad1c[m HEAD@{338}: rebase (reword): Merged AI Agent service, FAISS service, and Vector index - Need to clean up
+[33mb31981e[m HEAD@{339}: rebase (reword): Added adjustable embeddings quantity in config.py
+[33m25be544[m HEAD@{340}: rebase (reword): Migration from Vertex to FAISS successfull
+[33m7243f8a[m HEAD@{341}: rebase (reword): faiss works, integration with front end works, TTS not working
+[33mb7e09e6[m HEAD@{342}: rebase (reword): faiss works, integration with front end works, TTS not working
+[33me4c3a0c[m HEAD@{343}: rebase (reword): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33mcd0220c[m HEAD@{344}: rebase (reword): Debugged and created scripts to deploy AI agent and faiss service deployment + Faiss test script
+[33m4b51d2e[m HEAD@{345}: rebase (reword): FAIS works in Google Run with vecor index in GC bucket
+[33m90cddae[m HEAD@{346}: rebase (reword): FAIS works in Google Run with vecor index in GC bucket
+[33m68c6113[m HEAD@{347}: rebase (reword): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33mb77e021[m HEAD@{348}: rebase (reword): Move .gitignore to root, ignore venv, and remove venv from tracking
+[33ma5a365a[m HEAD@{349}: rebase (reword): Implemented FAISS ready to start testing
+[33mee0cb55[m HEAD@{350}: rebase (reword): Images retrievel and insrt in chat feed works
+[33m18b179f[m HEAD@{351}: rebase (reword): Changed response from backend from string to JSON
+[33m9f8c37c[m HEAD@{352}: rebase (reword): Minor tweaks
+[33mb462171[m HEAD@{353}: rebase (reword): Voice to Text working on Android and Chrome
+[33m1bc81fc[m HEAD@{354}: rebase (reword): Voice to Text is working on Android and Chrome
+[33me59ceb5[m HEAD@{355}: rebase (reword): Removed unnecessary files
+[33m61de356[m HEAD@{356}: rebase (reword): Removed unnecessary files
+[33m315ee19[m HEAD@{357}: rebase (reword): Refactoring Successful
+[33mab1a8ff[m HEAD@{358}: rebase (reword): Minor changes, chatbot still not working
+[33m1f50bfa[m HEAD@{359}: rebase (reword): Refactored in 19 files, chat bot not working
+[33me639e30[m HEAD@{360}: rebase (reword): Voice to Text working in Chrome
+[33m45405ec[m HEAD@{361}: rebase (reword): Voice to Text working on Android
+[33me099fd0[m HEAD@{362}: rebase (reword): Many small tweaks
+[33m7b6524d[m HEAD@{363}: rebase (reword): Fixed a few bugs, added voice selector
+[33m19cf724[m HEAD@{364}: rebase (reword): Text To Voice Works on web and android
+[33mf14ab73[m HEAD@{365}: rebase (reword): RAG Trained AI agent works on Chrome
+[33mc131363[m HEAD@{366}: rebase (reword): RAG Trained AI agent works on Chrome
+[33m2691ef4[m HEAD@{367}: rebase (reword): Proper Vector Index Creation Implemented
+[33mf5e7342[m HEAD@{368}: rebase (reword): RAG training works in deployed environment
+[33m4102bbf[m HEAD@{369}: rebase (reword): RAG agent works need to feed it info
+[33me3bc0d6[m HEAD@{370}: rebase (reword): RAG agent works but doesn't have access to manual
+[33m1e4caed[m HEAD@{371}: rebase (reword): RAG trained agent implementation almost complete
+[33m34a0dfc[m HEAD@{372}: rebase (reword): RAG trained agent implementation near completion
+[33m6e4822f[m HEAD@{373}: rebase (reword): AI chatbot working, only one instance.
+[33m303b148[m HEAD@{374}: rebase (reword): AI chatbot working, only one instance, logger personality
+[33m110b9fc[m HEAD@{375}: rebase (reword): first commit to set up
+[33mb4f8fd0[m HEAD@{376}: rebase: fast-forward
+[33m426da0a[m HEAD@{377}: rebase (start): checkout 426da0ad1de664e0bde63609990897b313dd74ad
