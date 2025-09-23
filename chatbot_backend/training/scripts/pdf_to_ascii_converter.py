@@ -16,8 +16,7 @@ import sys
 import os
 import re
 import unicodedata
-from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any
 import logging
 
 # Setup logging
@@ -71,7 +70,11 @@ def extract_pdf_text_simple(pdf_path: str) -> str:
     """Extract text from PDF using basic approach (fallback method)."""
     try:
         # Try PyPDF2 first (most common)
-        import PyPDF2
+        try:
+            import PyPDF2
+        except ImportError:
+            logger.error("PyPDF2 not installed. Install with: pip install PyPDF2")
+            return ""
 
         with open(pdf_path, 'rb') as file:
             pdf_reader = PyPDF2.PdfReader(file)
@@ -88,9 +91,6 @@ def extract_pdf_text_simple(pdf_path: str) -> str:
 
             return normalize_to_ascii(text)
 
-    except ImportError:
-        logger.error("PyPDF2 not installed. Install with: pip install PyPDF2")
-        return ""
     except Exception as e:
         logger.error(f"Error extracting PDF text: {e}")
         return ""
@@ -123,7 +123,10 @@ def extract_pdf_text_advanced(pdf_path: str) -> str:
 
 def extract_with_pdfplumber(pdf_path: str) -> str:
     """Extract using pdfplumber (best for tables/layout)."""
-    import pdfplumber
+    try:
+        import pdfplumber
+    except ImportError:
+        raise ImportError("pdfplumber not available. Install with: pip install pdfplumber")
 
     text = ""
     with pdfplumber.open(pdf_path) as pdf:
@@ -136,7 +139,10 @@ def extract_with_pdfplumber(pdf_path: str) -> str:
 
 def extract_with_pymupdf(pdf_path: str) -> str:
     """Extract using PyMuPDF/fitz (good OCR capabilities)."""
-    import fitz  # PyMuPDF
+    try:
+        import fitz  # PyMuPDF
+    except ImportError:
+        raise ImportError("PyMuPDF not available. Install with: pip install PyMuPDF")
 
     text = ""
     doc = fitz.open(pdf_path)
@@ -151,10 +157,13 @@ def extract_with_pymupdf(pdf_path: str) -> str:
 
 def extract_with_pdfminer(pdf_path: str) -> str:
     """Extract using pdfminer.six (good for complex layouts)."""
-    from pdfminer.high_level import extract_text
-    return extract_text(pdf_path)
+    try:
+        from pdfminer.high_level import extract_text
+        return extract_text(pdf_path)
+    except ImportError:
+        raise ImportError("pdfminer.six not available. Install with: pip install pdfminer.six")
 
-def structure_content_sections(raw_text: str, manual_title: str) -> List[Dict[str, Any]]:
+def structure_content_sections(raw_text: str, manual_title: str = "") -> List[Dict[str, Any]]:
     """Structure raw PDF text into organized sections for the template."""
 
     # Split text by pages for easier processing
