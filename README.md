@@ -1,4 +1,4 @@
-# 🤖 Universal Manual RAG Chat
+# Universal Manual RAG Chat
 
 > **AI-powered universal manual customer support system with advanced RAG, multi-embedding search, and strict manual adherence**
 
