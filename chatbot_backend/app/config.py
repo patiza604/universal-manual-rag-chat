@@ -65,7 +65,7 @@ DEBUG_MODE = os.getenv("DEBUG_MODE", "false").lower() == "true"
 LOG_QUERIES = os.getenv("LOG_QUERIES", "false").lower() == "true"
 
 # CORS Configuration
-CORS_ORIGINS_STR = os.getenv("CORS_ORIGINS", "http://localhost:3000,https://PLACEHOLDER.com")
+CORS_ORIGINS_STR = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:54671,https://ai-chatbot-472322.web.app")
 CORS_ORIGINS: List[str] = [origin.strip() for origin in CORS_ORIGINS_STR.split(",")]
 
 # Model Configuration
