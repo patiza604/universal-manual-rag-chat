@@ -1,11 +1,11 @@
 #!/bin/bash
-# Bash deployment script (avoiding PowerShell syntax issues)
-# Basic bash implementation
+# Bash deployment script using buildpack deployment
+# Deploys directly from source using Cloud Run buildpacks
 PROJECT_ID=${1:-"ai-chatbot-472322"}
 REGION=${2:-"us-central1"}
 SERVICE_NAME=${3:-"ai-agent-service"}
 
-echo "🚀 Building and deploying Enhanced AI Agent Service..."
+echo "🚀 Deploying Enhanced AI Agent Service using buildpacks..."
 echo "📁 Current directory: $(pwd)"
 
 # Check vector files
@@ -16,43 +16,13 @@ fi
 
 echo "✅ Vector files directory found"
 
-# Build with Cloud Build
-echo "📦 Building image with Google Cloud Build..."
-
-cat > cloudbuild_temp.yaml << EOF
-steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build',
-      '--no-cache',
-      '-t', 'gcr.io/$PROJECT_ID/$SERVICE_NAME:latest',
-      '.'
-    ]
-images:
-  - 'gcr.io/$PROJECT_ID/$SERVICE_NAME:latest'
-options:
-  machineType: 'E2_HIGHCPU_8'
-timeout: '1200s'
-EOF
-
-gcloud builds submit --config=cloudbuild_temp.yaml --project=$PROJECT_ID
-
-if [ $? -ne 0 ]; then
-    echo "❌ Cloud Build failed"
-    rm -f cloudbuild_temp.yaml
-    exit 1
-fi
-
-rm -f cloudbuild_temp.yaml
-echo "✅ Image built successfully"
-
-# Deploy to Cloud Run
-echo "🌐 Deploying to Cloud Run..."
+# Deploy to Cloud Run using buildpack deployment
+echo "📦 Building and deploying from source with buildpacks..."
 
 ENV_VARS="PROJECT_ID=$PROJECT_ID,LOCATION=$REGION,IS_LOCAL=false,LOCAL_VECTOR_FILES_PATH=app/vector-files,DEBUG_MODE=true"
 
 gcloud run deploy $SERVICE_NAME \
-    --image "gcr.io/$PROJECT_ID/$SERVICE_NAME:latest" \
+    --source . \
     --region $REGION \
     --allow-unauthenticated \
     --set-env-vars $ENV_VARS \
@@ -64,7 +34,7 @@ gcloud run deploy $SERVICE_NAME \
     --project $PROJECT_ID
 
 if [ $? -eq 0 ]; then
-    echo "✅ AI Agent Service deployed successfully!"
+    echo "✅ AI Agent Service deployed successfully using buildpacks!"
 
     # Get service URL
     SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --region $REGION --format "value(status.url)" --project $PROJECT_ID)
@@ -76,6 +46,6 @@ if [ $? -eq 0 ]; then
     curl -f "$SERVICE_URL/health" || echo "⚠️ Health check failed"
 
 else
-    echo "❌ Cloud Run deployment failed"
+    echo "❌ Buildpack deployment failed"
     exit 1
 fi

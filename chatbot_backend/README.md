@@ -41,7 +41,7 @@ This platform combines multiple AI services into a unified system:
 
 - **Python 3.11+**
 - **Google Cloud SDK** configured with Application Default Credentials
-- **Docker** (for deployment)
+- **Buildpack Configuration Files** (`.python-version`, `runtime.txt`, `Procfile`)
 - **Vector Files** in `app/vector-files/`
 - **Service Account** with proper IAM permissions
 
@@ -79,14 +79,11 @@ This platform combines multiple AI services into a unified system:
 
 #### Deploy Backend to Cloud Run
 
-1. **Build and Deploy**
+1. **Deploy with Buildpacks**
    ```bash
-   # Build Docker image
-   gcloud builds submit --tag gcr.io/ai-chatbot-472322/ai-agent-service
-
-   # Deploy to Cloud Run
+   # Deploy using source code (buildpack deployment)
    gcloud run deploy ai-agent-service \
-       --image gcr.io/ai-chatbot-472322/ai-agent-service \
+       --source . \
        --region us-central1 \
        --allow-unauthenticated \
        --service-account ai-agent-runner@ai-chatbot-472322.iam.gserviceaccount.com \
@@ -195,12 +192,9 @@ The application uses Application Default Credentials with a dedicated service ac
    ```bash
    cd chatbot_backend
 
-   # Build new image
-   gcloud builds submit --tag gcr.io/ai-chatbot-472322/ai-agent-service
-
-   # Deploy updated service
+   # Deploy updated service with buildpacks
    gcloud run deploy ai-agent-service \
-       --image gcr.io/ai-chatbot-472322/ai-agent-service \
+       --source . \
        --region us-central1 \
        --project ai-chatbot-472322
    ```
@@ -278,9 +272,11 @@ The system uses three core files for vector search:
    # Test locally
    python main.py
 
-   # Deploy to production
-   gcloud builds submit --tag gcr.io/ai-chatbot-472322/ai-agent-service
-   gcloud run deploy ai-agent-service --image gcr.io/ai-chatbot-472322/ai-agent-service --region us-central1 --project ai-chatbot-472322
+   # Deploy to production with buildpacks
+   gcloud run deploy ai-agent-service \
+       --source . \
+       --region us-central1 \
+       --project ai-chatbot-472322
    ```
 
 ## 🧪 Testing
@@ -417,6 +413,31 @@ gcloud run services update ai-agent-service \
       --project ai-chatbot-472322
 ```
 
+#### Buildpack Configuration Issues
+```bash
+# Verify buildpack configuration files exist
+ls -la .python-version runtime.txt Procfile
+
+# Check Python version compatibility
+cat .python-version
+cat runtime.txt
+
+# Verify Procfile syntax
+cat Procfile
+```
+
+#### "Source deployment failed"
+```bash
+# Check for missing configuration files
+# Ensure these files exist in your project root:
+# - .python-version (contains: 3.11)
+# - runtime.txt (contains: python-3.11)
+# - Procfile (contains: web: uvicorn main:app --host 0.0.0.0 --port $PORT)
+
+# Check deployment logs for specific errors
+gcloud logging read 'resource.type=build' --limit=20 --project=ai-chatbot-472322
+```
+
 ### Debug Commands
 
 ```bash
@@ -470,6 +491,6 @@ if success:
 
 ---
 
-**Version**: 2.1.0 (Migrated to ai-chatbot-472322)
-**Last Updated**: 2025-09-17
-**Status**: ✅ Fully Operational
+**Version**: 2.2.0 (Updated to Buildpack Deployment)
+**Last Updated**: 2025-09-24
+**Status**: ✅ Fully Operational with Buildpack Deployment

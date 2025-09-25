@@ -1,11 +1,13 @@
 # AI Assistant Platform - Directory Structure (Embedded FAISS)
 # ============================================================================
 
-chatbot_frontend/
+chatbot_backend/
 ├── README.md
 ├── .env
 ├── requirements.txt
-├── Dockerfile
+├── .python-version
+├── runtime.txt
+├── Procfile
 ├── main.py
 │
 ├── app/
