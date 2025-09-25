@@ -1,5 +1,5 @@
-# api/routes_chat.py - Fixed version
-from fastapi import APIRouter, HTTPException, Request
+# api/routes_chat.py - Fixed version with authentication
+from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.responses import StreamingResponse
 from models.schemas import MessageRequest, ChatWithTTSRequest
 from audio.clean_text import clean_for_tts
@@ -7,6 +7,7 @@ from audio.tts import synthesize_speech_with_retry
 from agent.embedding import get_query_embedding
 from agent.retrieval import retrieve_relevant_chunks
 from google.cloud import texttospeech
+from app.security import get_api_key, check_rate_limit
 import base64
 import traceback
 import json
@@ -17,8 +18,15 @@ router = APIRouter()
 
 # api/routes_chat.py - Fix both endpoints to pass firebase_service
 @router.post("/send")
-async def send_chat_message(request: MessageRequest, req: Request):
+async def send_chat_message(
+    request: MessageRequest,
+    req: Request,
+    api_key: str = Depends(get_api_key)
+):
     """Endpoint to send a message and get a structured JSON response using RAG."""
+    # Rate limiting check
+    check_rate_limit(api_key)
+
     chat_manager = req.app.state.chat_manager
     embedding_model = req.app.state.embedding_model
     faiss_service = req.app.state.faiss_service
@@ -66,8 +74,15 @@ async def send_chat_message(request: MessageRequest, req: Request):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/send-with-tts")
-async def send_chat_message_with_tts(request: ChatWithTTSRequest, req: Request):
+async def send_chat_message_with_tts(
+    request: ChatWithTTSRequest,
+    req: Request,
+    api_key: str = Depends(get_api_key)
+):
     """Endpoint to send a message and get both structured JSON and audio response."""
+    # Rate limiting check
+    check_rate_limit(api_key)
+
     chat_manager = req.app.state.chat_manager
     embedding_model = req.app.state.embedding_model
     faiss_service = req.app.state.faiss_service
@@ -213,24 +228,55 @@ async def preflight_send_with_tts():
     return {}
 
 @router.get("/image-proxy")
-async def image_proxy(url: str):
+async def image_proxy(url: str, api_key: str = Depends(get_api_key)):
     """Proxy endpoint to serve Firebase Storage images and bypass CORS"""
     try:
-        if not url.startswith('https://firebasestorage.googleapis.com/'):
-            raise HTTPException(status_code=400, detail="Invalid image URL")
-        
-        response = requests.get(url)
-        
+        # Rate limiting check
+        check_rate_limit(api_key)
+
+        # Strict URL validation to prevent SSRF attacks
+        allowed_domains = [
+            'firebasestorage.googleapis.com',
+            'storage.googleapis.com'
+        ]
+
+        if not any(url.startswith(f'https://{domain}/') for domain in allowed_domains):
+            raise HTTPException(status_code=400, detail="Invalid image URL domain")
+
+        # Additional validation - must contain our bucket
+        if 'ai-chatbot-472322' not in url:
+            raise HTTPException(status_code=400, detail="Invalid bucket")
+
+        # Timeout and size limits for security
+        response = requests.get(url, timeout=10, stream=True)
+
         if response.status_code != 200:
             raise HTTPException(status_code=404, detail="Image not found")
-        
+
+        # Check content type
+        content_type = response.headers.get("content-type", "")
+        if not content_type.startswith(('image/', 'application/pdf')):
+            raise HTTPException(status_code=400, detail="Invalid content type")
+
+        # Stream with size limit (10MB max)
+        def generate():
+            total_size = 0
+            max_size = 10 * 1024 * 1024  # 10MB
+            for chunk in response.iter_content(chunk_size=8192):
+                total_size += len(chunk)
+                if total_size > max_size:
+                    raise HTTPException(status_code=413, detail="File too large")
+                yield chunk
+
         return StreamingResponse(
-            io.BytesIO(response.content),
-            media_type=response.headers.get("content-type", "image/png"),
+            generate(),
+            media_type=content_type,
             headers={
-                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Origin": "*",  # This will be restricted by CORS middleware
                 "Access-Control-Allow-Methods": "GET",
                 "Access-Control-Allow-Headers": "*",
+                "Cache-Control": "public, max-age=3600",  # 1 hour cache
+                "X-Content-Type-Options": "nosniff"
             }
         )
         

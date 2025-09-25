@@ -1,8 +1,48 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if request.auth != null;
+    // Public manual images - read only for authenticated users
+    match /ai_images/manual001/{imageId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Images should be uploaded server-side only
     }
+
+    // User uploaded content - users can only access their own
+    match /user_uploads/{userId}/{fileName} {
+      allow read, write: if request.auth != null &&
+                         request.auth.uid == userId &&
+                         validateImageFile(fileName);
+      allow delete: if request.auth != null &&
+                   request.auth.uid == userId;
+    }
+
+    // Admin uploads (for manual content)
+    match /admin_uploads/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null &&
+                   request.auth.token.admin == true;
+    }
+
+    // Temporary files (auto-cleanup)
+    match /temp/{fileName} {
+      allow read, write: if request.auth != null &&
+                         validateTempFile(fileName);
+    }
+
+    // Default deny all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+
+  // Validation functions
+  function validateImageFile(fileName) {
+    return fileName.lower().matches('.*\\.(jpg|jpeg|png|webp|gif)$') &&
+           fileName.size() <= 100; // Max 100 chars filename
+  }
+
+  function validateTempFile(fileName) {
+    return fileName.size() <= 100 &&
+           fileName.matches('[a-zA-Z0-9_-]+\\.[a-zA-Z0-9]+');
   }
 }

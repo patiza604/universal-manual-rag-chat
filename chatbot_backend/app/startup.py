@@ -1,9 +1,12 @@
 # app/startup.py - Complete corrected version
 import os
 import sys
+import re
 import traceback
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 from dotenv import load_dotenv
 import vertexai
 from vertexai.language_models import TextEmbeddingModel
@@ -28,6 +31,7 @@ from app.config import (
 )
 from app.logger import setup_logging
 from app.faiss_vector_service import EnhancedFAISSVectorService
+from app.security import get_admin_key
 from agent.chat_manager import AIChatManager
 from agent.prompt import CORE_SYSTEM_INSTRUCTION
 
@@ -59,21 +63,107 @@ app = FastAPI(
     debug=DEBUG_MODE
 )
 
-# Configure CORS with configurable origins
-origins = [
-    "http://localhost:55316",
-    "http://localhost:3000",
-    "http://localhost:8080",
-    "https://ai-agent-service-294800519552.us-central1.run.app",
-    "*"  # Allow all origins for testing
-]
+# Configure CORS with restricted origins (NO WILDCARD)
+origins = CORS_ORIGINS.copy()  # Use environment-configured origins
 
+# Add development origins only if in local mode
+if IS_LOCAL:
+    dev_origins = [
+        "http://localhost:55316",
+        "http://localhost:3000",
+        "http://localhost:8080"
+    ]
+    origins.extend(dev_origins)
+
+# Security headers middleware
+@app.middleware("http")
+async def add_security_headers(request, call_next):
+    response = await call_next(request)
+
+    # Security headers
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Content-Security-Policy"] = "default-src 'self'"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+
+    return response
+
+# Custom CORS configuration that supports localhost wildcards
+import re
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
+
+class DynamicCORSMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app, allowed_origins: list, **kwargs):
+        super().__init__(app)
+        self.allowed_origins = allowed_origins
+        self.allow_credentials = kwargs.get('allow_credentials', True)
+        self.allow_methods = kwargs.get('allow_methods', ["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+        self.allow_headers = kwargs.get('allow_headers', [
+            "Authorization", "Content-Type", "X-API-Key", "Accept",
+            "Origin", "User-Agent", "Cache-Control", "Content-Language",
+            "Accept-Language"
+        ])
+
+    def is_allowed_origin(self, origin: str) -> bool:
+        if not origin:
+            return False
+
+        # Check exact matches first
+        if origin in self.allowed_origins:
+            return True
+
+        # Check localhost with any port pattern
+        localhost_pattern = r'^http://localhost:\d+$'
+        if re.match(localhost_pattern, origin):
+            return True
+
+        return False
+
+    async def dispatch(self, request, call_next):
+        origin = request.headers.get('Origin')
+
+        # Handle preflight OPTIONS requests
+        if request.method == "OPTIONS":
+            if self.is_allowed_origin(origin):
+                return Response(
+                    status_code=200,
+                    headers={
+                        'Access-Control-Allow-Origin': origin,
+                        'Access-Control-Allow-Methods': ', '.join(self.allow_methods),
+                        'Access-Control-Allow-Headers': ', '.join(self.allow_headers),
+                        'Access-Control-Allow-Credentials': 'true' if self.allow_credentials else 'false',
+                        'Access-Control-Max-Age': '600'
+                    }
+                )
+            else:
+                return Response(status_code=400)
+
+        # Handle regular requests
+        response = await call_next(request)
+
+        if self.is_allowed_origin(origin):
+            response.headers['Access-Control-Allow-Origin'] = origin
+            response.headers['Access-Control-Allow-Credentials'] = 'true' if self.allow_credentials else 'false'
+            response.headers['Vary'] = 'Origin'
+
+        return response
+
+# Apply custom CORS middleware
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
+    DynamicCORSMiddleware,
+    allowed_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=[
+        "Authorization", "Content-Type", "X-API-Key", "Accept",
+        "Origin", "User-Agent", "Cache-Control", "Content-Language",
+        "Accept-Language"
+    ]
 )
 
 # Include routers with error handling
@@ -117,9 +207,9 @@ async def detailed_health_check():
         }
     }
 
-# Debug endpoint (only in debug mode)
+# Debug endpoint (admin only)
 @app.get("/debug/config")
-async def debug_config():
+async def debug_config(admin_key: str = Depends(get_admin_key)):
     """Debug configuration endpoint"""
     return {
         "project_id": PROJECT_ID,

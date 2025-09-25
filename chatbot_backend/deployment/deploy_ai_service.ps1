@@ -6,7 +6,7 @@ param(
     [string]$ServiceName = "ai-agent-service"
 )
 
-Write-Host "🚀 Building and deploying Enhanced AI Agent Service..." -ForegroundColor Green
+Write-Host "🚀 Deploying Enhanced AI Agent Service with buildpack..." -ForegroundColor Green
 
 # Verify we're in the right directory
 $currentPath = Get-Location
@@ -127,77 +127,47 @@ if ($faissContent -match "class\s+(\w+FAISSVectorService|LocalFAISSVectorService
     Write-Host "⚠️ Could not find FAISS class definition" -ForegroundColor Yellow
 }
 
+# Verify buildpack configuration files
+Write-Host "🔍 Checking buildpack configuration files..." -ForegroundColor Yellow
+
+$buildpackFiles = @(
+    @{Name=".python-version"; Expected="3.11"; Description="Python version"},
+    @{Name="runtime.txt"; Expected="python-3.11"; Description="Runtime specification"},
+    @{Name="Procfile"; Expected="web: python main.py"; Description="Process specification"}
+)
+
+foreach ($file in $buildpackFiles) {
+    if (-not (Test-Path $file.Name)) {
+        Write-Host "❌ Buildpack file missing: $($file.Name)" -ForegroundColor Red
+        Write-Host "   Expected content: $($file.Expected)" -ForegroundColor Gray
+        exit 1
+    } else {
+        $content = Get-Content $file.Name -Raw
+        $content = $content.Trim()
+        if ($content -eq $file.Expected) {
+            Write-Host "✅ Found: $($file.Name) ($($file.Description))" -ForegroundColor Green
+        } else {
+            Write-Host "⚠️ $($file.Name) content mismatch:" -ForegroundColor Yellow
+            Write-Host "   Found: '$content'" -ForegroundColor Gray
+            Write-Host "   Expected: '$($file.Expected)'" -ForegroundColor Gray
+        }
+    }
+}
+
+# Generate a unique deployment ID for tracking
+$deployId = "deploy-" + (Get-Date -Format "yyyyMMdd-HHmmss")
+Write-Host "🏷️ Deployment ID: $deployId" -ForegroundColor Cyan
+Write-Host "🔧 System Type: $systemType RAG" -ForegroundColor Cyan
+
 # Clean any previous build artifacts
 Write-Host "🧹 Cleaning previous build artifacts..." -ForegroundColor Yellow
 if (Test-Path ".cloudbuild") {
     Remove-Item -Recurse -Force ".cloudbuild"
 }
 
-# Generate a unique build ID to force cache invalidation
-$buildId = "build-" + (Get-Date -Format "yyyyMMdd-HHmmss")
-Write-Host "🏷️ Build ID: $buildId" -ForegroundColor Cyan
-Write-Host "🔧 System Type: $systemType RAG" -ForegroundColor Cyan
-
-# Check if Dockerfile exists
-if (-not (Test-Path "Dockerfile")) {
-    Write-Host "❌ Dockerfile not found in current directory" -ForegroundColor Red
-    exit 1
-}
-Write-Host "✅ Dockerfile found" -ForegroundColor Green
-
-# Build with Google Cloud Build (with cache busting)
-Write-Host "📦 Building image with Google Cloud Build..." -ForegroundColor Yellow
+Write-Host "📦 Deploying with buildpack from source..." -ForegroundColor Yellow
 Write-Host "   Using project: $ProjectId" -ForegroundColor Gray
-Write-Host "   Image tag: gcr.io/$ProjectId/${ServiceName}:latest" -ForegroundColor Gray
-
-# Use gcloud builds submit with specific flags to ensure fresh build
-$imageTag = "gcr.io/$ProjectId/${ServiceName}:latest"
-
-# Create a cloudbuild.yaml for more control
-$cloudbuildYaml = @"
-steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build',
-      '--no-cache',
-      '--build-arg', 'BUILDKIT_INLINE_CACHE=0',
-      '--build-arg', 'SYSTEM_TYPE=$systemType',
-      '-t', '$imageTag',
-      '-t', 'gcr.io/$ProjectId/${ServiceName}:$buildId',
-      '-f', 'Dockerfile',
-      '.'
-    ]
-images:
-  - '$imageTag'
-  - 'gcr.io/$ProjectId/${ServiceName}:$buildId'
-options:
-  machineType: 'E2_HIGHCPU_8'
-  substitution_option: 'ALLOW_LOOSE'
-timeout: '1200s'
-"@
-
-# Save the cloudbuild.yaml temporarily
-$cloudbuildYaml | Out-File -FilePath "cloudbuild_temp.yaml" -Encoding utf8
-
-try {
-    # Submit the build with the custom config
-    gcloud builds submit `
-        --config=cloudbuild_temp.yaml `
-        --project=$ProjectId `
-        --substitutions="_BUILD_ID=$buildId,_SYSTEM_TYPE=$systemType"
-    
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "❌ Cloud Build failed" -ForegroundColor Red
-        exit 1
-    }
-} finally {
-    # Clean up temporary file
-    if (Test-Path "cloudbuild_temp.yaml") {
-        Remove-Item "cloudbuild_temp.yaml"
-    }
-}
-
-Write-Host "✅ Image built successfully" -ForegroundColor Green
+Write-Host "   Deployment method: Cloud Buildpacks" -ForegroundColor Gray
 
 # Enhanced environment variables
 $envVars = "PROJECT_ID=$ProjectId,LOCATION=$Region,IS_LOCAL=false,LOCAL_VECTOR_FILES_PATH=app/vector-files,FAISS_INDEX_TYPE=IVF,CORS_ORIGINS=https://chatbot-frontend--ai-chatbot-472322.us-central1.app,DEBUG_MODE=true,LOG_QUERIES=false,EMBEDDING_QUANT=10,FIREBASE_STORAGE_BUCKET=ai-chatbot-472322.appspot.com"
@@ -206,11 +176,11 @@ if ($hasEnhancedFiles) {
     $envVars += ",CHUNK_SIZE_MIN=512,CHUNK_SIZE_MAX=1024,CHUNK_OVERLAP_PERCENT=10,ENABLE_LLM_CLASSIFICATION=true"
 }
 
-# Deploy to Cloud Run with the fresh image
+# Deploy to Cloud Run with buildpack from source
 Write-Host "🌐 Deploying to Cloud Run..." -ForegroundColor Yellow
 Write-Host "   Service: $ServiceName" -ForegroundColor Gray
 Write-Host "   Region: $Region" -ForegroundColor Gray
-Write-Host "   Image: $imageTag" -ForegroundColor Gray
+Write-Host "   Source: Current directory (.)" -ForegroundColor Gray
 Write-Host "   System: $systemType RAG" -ForegroundColor Gray
 
 # First, check if service exists
@@ -221,9 +191,9 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "📝 Creating new service..." -ForegroundColor Yellow
 }
 
-# Deploy with explicit image digest to ensure we use the fresh build
+# Deploy with buildpack from source directory
 gcloud run deploy $ServiceName `
-    --image "$imageTag" `
+    --source . `
     --region $Region `
     --allow-unauthenticated `
     --service-account "ai-agent-runner@$ProjectId.iam.gserviceaccount.com" `
@@ -241,7 +211,7 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "✅ AI Agent Service deployed successfully!" -ForegroundColor Green
+Write-Host "✅ AI Agent Service deployed successfully with buildpack!" -ForegroundColor Green
 
 # Get service URL
 $ServiceUrl = gcloud run services describe $ServiceName --region $Region --format "value(status.url)" --project $ProjectId
@@ -291,7 +261,7 @@ try {
 } catch {
     Write-Host "⚠️ Health check failed: $($_.Exception.Message)" -ForegroundColor Yellow
     Write-Host "🔍 Checking service logs..." -ForegroundColor Yellow
-    & gcloud logging read "resource.type=cloud_run_revision AND resource.labels.service_name=$ServiceName" --limit=20 --format="table(timestamp,severity,textPayload)" --project=$ProjectId
+    & gcloud logging read "resource.type=cloud_run_revision AND resource.labels.service_name=$ServiceName" --limit=20 --format='table(timestamp,severity,textPayload)' --project=$ProjectId
 }
 
 # Update .env file
@@ -307,13 +277,16 @@ if (Test-Path ".env") {
 }
 
 Write-Host ""
-Write-Host "✅ Enhanced AI Agent Service deployment complete!" -ForegroundColor Green
+Write-Host "✅ Enhanced AI Agent Service buildpack deployment complete!" -ForegroundColor Green
 Write-Host "🔗 Service URL: $ServiceUrl" -ForegroundColor Cyan
-Write-Host "🏷️ Build ID: $buildId" -ForegroundColor Gray
+Write-Host "🏷️ Deployment ID: $deployId" -ForegroundColor Gray
 Write-Host "📌 Revision: $latestRevision" -ForegroundColor Gray
 Write-Host "🔧 System: $systemType RAG" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "📊 Service Configuration:" -ForegroundColor Yellow
+Write-Host "📊 Buildpack Service Configuration:" -ForegroundColor Yellow
+Write-Host "    - Deployment Method: Cloud Buildpacks" -ForegroundColor White
+Write-Host "    - Python Runtime: 3.11 (from .python-version)" -ForegroundColor White
+Write-Host "    - Process: web: python main.py (from Procfile)" -ForegroundColor White
 Write-Host "    - RAG System: $systemType" -ForegroundColor White
 Write-Host "    - Vector Files: app/vector-files/" -ForegroundColor White
 Write-Host "    - Memory: 4GB" -ForegroundColor White
@@ -322,7 +295,8 @@ Write-Host "    - Max Instances: 10" -ForegroundColor White
 Write-Host "    - Firebase Storage: ai-chatbot-472322.appspot.com" -ForegroundColor White
 
 Write-Host ""
-Write-Host "🔍 Next steps:" -ForegroundColor Yellow
-Write-Host "    1. Test: python deployment\test_ai_service.py" -ForegroundColor White
-Write-Host "    2. Test images: Check Firebase Storage setup" -ForegroundColor White
-Write-Host "    3. Test chat: curl -X POST `$ServiceUrl/chat/send -H 'Content-Type: application/json' -d '{""message"": ""test""}'" -ForegroundColor White
+Write-Host "Next steps:" -ForegroundColor Yellow
+Write-Host "1. Test: python deployment/test_ai_service.py" -ForegroundColor White
+Write-Host "2. Test images: Check Firebase Storage setup" -ForegroundColor White
+Write-Host "3. Test chat: Run the test script above" -ForegroundColor White
+Write-Host "4. Monitor: gcloud logging read 'resource.type=cloud_run_revision'" -ForegroundColor White

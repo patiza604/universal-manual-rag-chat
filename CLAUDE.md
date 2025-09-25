@@ -15,7 +15,7 @@ This is an AI-powered assistant platform that combines a Flutter frontend with a
 - **AI Services**: Google Gemini 2.5 Flash with **strict manual adherence**, Google Cloud Speech/TTS
 - **Vector Search**: Embedded FAISS with local vector files
 - **Image Storage**: Firebase Storage with signed URLs for secure image access
-- **Deployment**: Google Cloud Run
+- **Deployment**: Google Cloud Run with buildpack (no Dockerfile required)
 
 ### Frontend (chatbot_frontend/)
 - **Framework**: Flutter with Firebase integration
@@ -38,7 +38,10 @@ python -m pylint app/ agent/ api/
 # Test deployment
 python deployment/test_ai_service.py
 
-# Deploy to Cloud Run
+# Deploy to Cloud Run (buildpack method - recommended)
+gcloud run deploy ai-agent-service --source . --region us-central1 --allow-unauthenticated
+
+# Legacy deployment script (Docker-based, may need updates for buildpack)
 ./deployment/deploy_ai_service.ps1
 ```
 
@@ -89,6 +92,11 @@ cp training/output/vectors_v2/* app/vector-files/
 
 # Test and deploy
 python main.py  # Test locally first
+
+# Recommended: Buildpack deployment
+gcloud run deploy ai-agent-service --source . --region us-central1 --allow-unauthenticated
+
+# Legacy: Docker-based script (may need updates for buildpack)
 ./deployment/deploy_ai_service.ps1
 ```
 
@@ -130,6 +138,9 @@ python simple_server.py  # Includes image proxy endpoint
 ## Key Configuration Files
 
 - **Backend**: `chatbot_backend/app/config.py` - Environment variables and AI model settings
+- **Backend Deployment**: `chatbot_backend/.python-version` - Python 3.11 runtime specification
+- **Backend Runtime**: `chatbot_backend/runtime.txt` - Cloud Run Python runtime configuration
+- **Backend Process**: `chatbot_backend/Procfile` - ASGI server startup command
 - **Frontend**: `chatbot_frontend/pubspec.yaml` - Flutter dependencies
 - **Firebase Config**: `chatbot_frontend/firebase.json` - Firebase project configuration
 - **Firebase Options**: `chatbot_frontend/lib/firebase_options.dart` - Generated Firebase configuration
@@ -311,6 +322,15 @@ flutter test
 - **Low chunk count**: Check manual template format - sections must follow `## Section N:` pattern
 - **Poor question quality**: Adjust question templates in configuration file
 
+### Deployment Issues (Buildpack Method)
+- **Build fails with buildpack**: Ensure `.python-version` file contains `3.11` and `runtime.txt` contains `python-3.11`
+- **Service won't start**: Check `Procfile` contains correct startup command: `web: python main.py`
+- **Python version mismatch**: Verify both `.python-version` and `runtime.txt` specify Python 3.11
+- **Dependencies not installing**: Check `requirements.txt` is in root directory and properly formatted
+- **Source deployment fails**: Use `gcloud run deploy --source .` instead of Docker-based deployment
+- **Buildpack detection fails**: Ensure `requirements.txt` exists in project root for Python buildpack detection
+- **Deployment script issues**: The PowerShell script `deploy_ai_service.ps1` may need updates to use buildpack instead of Docker build process
+
 ### Legacy System Issues
 - **FAISS service not available**: Check vector files exist in `app/vector-files/`
 - **Memory exceeded**: Increase Cloud Run memory allocation (default 4GB)
@@ -387,6 +407,19 @@ python training/scripts/content_extractor.py
 
 # Test Universal Orchestrator
 python training/scripts/chunking_orchestrator.py
+
+# Buildpack deployment debugging
+# Check buildpack configuration files
+ls -la .python-version runtime.txt Procfile
+
+# Test buildpack deployment locally (if supported)
+gcloud run deploy ai-agent-service --source . --region us-central1 --no-traffic
+
+# View buildpack build logs
+gcloud logging read 'resource.type=build AND resource.labels.build_id=YOUR_BUILD_ID' --limit=50
+
+# Check Cloud Run service configuration
+gcloud run services describe ai-agent-service --region us-central1 --format="export"
 ```
 
 ## Image Retrieval Implementation
@@ -415,10 +448,50 @@ The system uses a **backend image proxy pattern** to serve Firebase Storage imag
 4. **Backend Serving**: Development proxy serves images with CORS headers for local testing
 5. **Frontend Display**: Flutter app receives proxy URLs and displays images without CORS issues
 
+## Deployment Architecture
+
+### Buildpack Deployment (Current Method)
+The project uses Google Cloud buildpacks for containerization, eliminating Docker Hub authentication issues:
+
+**Key Files**:
+- `.python-version`: Specifies Python 3.11 runtime
+- `runtime.txt`: Cloud Run Python runtime configuration (`python-3.11`)
+- `Procfile`: ASGI server startup (`web: python main.py`)
+- `requirements.txt`: Python dependencies for buildpack detection
+
+**Deployment Commands**:
+```bash
+# Method 1: Direct buildpack deployment (recommended)
+cd chatbot_backend
+gcloud run deploy ai-agent-service --source . --region us-central1 --allow-unauthenticated --memory 4Gi --cpu 2
+
+# Method 2: PowerShell deployment script (legacy Docker method - may need updates)
+./deployment/deploy_ai_service.ps1
+
+# Method 3: Manual buildpack deployment with full configuration
+gcloud run deploy ai-agent-service \
+    --source . \
+    --region us-central1 \
+    --allow-unauthenticated \
+    --memory 4Gi \
+    --cpu 2 \
+    --max-instances 10 \
+    --timeout 300 \
+    --set-env-vars "PROJECT_ID=ai-chatbot-472322,LOCATION=us-central1,IS_LOCAL=false"
+```
+
+**Benefits**:
+- No Dockerfile required
+- No Docker Hub authentication needed
+- Automatic Python buildpack detection
+- Simplified deployment process
+- Better integration with Cloud Run
+
 ## Notes
 
 - This is a production-ready AI assistant platform with enterprise-level vector search
 - The embedded FAISS architecture provides faster response times and lower costs than separate services
+- **Buildpack Deployment**: Uses Google Cloud buildpacks instead of Docker for simplified deployment
 - Vector content processing requires Google Cloud credentials and can take significant time for large documents
 - Always test locally before deploying vector updates to production
 - **Image Proxy**: The `/image-proxy/` endpoint is for development use; production should use direct Firebase Storage URLs with proper CORS configuration
@@ -436,13 +509,17 @@ The system uses a **backend image proxy pattern** to serve Firebase Storage imag
 - **Fixed** localhost:8080 connection issues preventing chat functionality
 - **Deployed** updated backend with strict manual adherence to production
 
+### ✅ Buildpack Deployment Implementation (2025-09-24)
+- **Migrated from Docker** to Google Cloud buildpacks for simplified deployment
+- **Resolved Docker Hub authentication** issues that were blocking deployments
+- **Added buildpack configuration**: `.python-version`, `runtime.txt`, `Procfile`
+- **Streamlined deployment process** with `gcloud run deploy --source .`
+- **Eliminated Docker dependency** for faster, more reliable deployments
+
 ### ✅ Current Status
 - **Backend**: Deployed at `https://ai-agent-service-325296751367.us-central1.run.app`
+- **Deployment Method**: Google Cloud buildpacks (no Docker required)
 - **Manual Content**: 34 enhanced chunks with comprehensive Orbi troubleshooting
 - **Response Quality**: Direct, manual-based technical support responses
 - **Frontend**: Properly connected to production backend
-
-
-
-
-
+- whenever a script doesn't work, utilize the script-quality-reviewer.md to correct the script rather than find a workaround to using the script.

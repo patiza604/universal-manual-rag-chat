@@ -31,6 +31,21 @@
 
   <title>ai_agent</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Suppress Firebase popup.ts COOP console errors -->
+  <script>
+    // Suppress specific console errors from Firebase popup.ts
+    const originalError = console.error;
+    console.error = function(...args) {
+      const message = args.join(' ');
+      // Filter out Cross-Origin-Opener-Policy popup.ts errors
+      if (message.includes('Cross-Origin-Opener-Policy') &&
+          message.includes('window.close')) {
+        return; // Suppress this error
+      }
+      originalError.apply(console, args);
+    };
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>

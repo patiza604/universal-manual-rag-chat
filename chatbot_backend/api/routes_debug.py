@@ -1,7 +1,8 @@
-# api/routes_debug.py
-from fastapi import APIRouter, Request, Response, HTTPException
+# api/routes_debug.py - Secured debug endpoints
+from fastapi import APIRouter, Request, Response, HTTPException, Depends
 from audio.clean_text import clean_for_tts
 from google.cloud import texttospeech
+from app.security import get_admin_key, check_rate_limit
 import importlib.metadata
 import base64
 import os
@@ -39,8 +40,9 @@ async def check_tts_status(req: Request):
     }
 
 @router.get("/faiss-status")
-async def check_faiss_status(req: Request):
+async def check_faiss_status(req: Request, admin_key: str = Depends(get_admin_key)):
     """Check FAISS service status and performance metrics"""
+    check_rate_limit(admin_key)
     faiss_service = req.app.state.faiss_service
 
     if not faiss_service:
@@ -199,8 +201,9 @@ async def test_text_cleaning():
     return {"test_results": results}
 
 @router.get("/initialization-status")
-async def check_initialization_status(req: Request):
+async def check_initialization_status(req: Request, admin_key: str = Depends(get_admin_key)):
     """Check if all services are properly initialized"""
+    check_rate_limit(admin_key)
     try:
         chat_manager = getattr(req.app.state, 'chat_manager', None)
         embedding_model = getattr(req.app.state, 'embedding_model', None)

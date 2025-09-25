@@ -19,29 +19,21 @@ class FirebaseStorageService:
         self._initialize_storage()
 
     def _initialize_storage(self):
-        """Initialize Google Cloud Storage client with confirmed bucket"""
+        """Initialize Google Cloud Storage client with secured credentials"""
         try:
-            # Try to use service account key file first
-            key_paths = [
-                "gcp-keys/ai-chatbot-472322-firebase-storage.json",
-                "gcp-keys/ai-chatbot-beb8d-firebase-adminsdk-fbsvc-c2ce8b36f1.json",
-                "gcp-keys/service-account-key.json"
-            ]
-
+            # Check for environment-based credentials first (recommended)
+            credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
             credentials = None
-            for key_path in key_paths:
-                if os.path.exists(key_path):
-                    logger.info(f"Using service account key: {key_path}")
-                    credentials = service_account.Credentials.from_service_account_file(key_path)
-                    break
 
-            if credentials:
+            if credentials_path and os.path.exists(credentials_path):
+                logger.info(f"Using service account key from GOOGLE_APPLICATION_CREDENTIALS")
+                credentials = service_account.Credentials.from_service_account_file(credentials_path)
                 self.client = storage.Client(credentials=credentials)
             else:
-                logger.info("No service account key found, using Application Default Credentials")
+                logger.info("Using Application Default Credentials (recommended for production)")
                 self.client = storage.Client()
 
-            bucket_name = "ai-chatbot-472322.firebasestorage.app"
+            bucket_name = os.getenv("FIREBASE_STORAGE_BUCKET", "ai-chatbot-472322.firebasestorage.app")
             logger.info(f"Using bucket: {bucket_name}")
             self.bucket = self.client.bucket(bucket_name)
 

@@ -2,8 +2,49 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null;
+    // Chat sessions - users can only access their own
+    match /chat_sessions/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
+
+    // Chat history - users can only access their own
+    match /chat_history/{userId}/messages/{messageId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null &&
+                   request.auth.uid == userId &&
+                   validateMessage(request.resource.data);
+    }
+
+    // User profiles - users can only access their own
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Public manual content (read-only for authenticated users)
+    match /manual_content/{docId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Manual content should be managed server-side only
+    }
+
+    // API usage tracking (admin only)
+    match /api_usage/{docId} {
+      allow read, write: if request.auth != null &&
+                         request.auth.token.admin == true;
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+
+  // Validation functions
+  function validateMessage(data) {
+    return data.keys().hasAll(['text', 'timestamp', 'type']) &&
+           data.text is string &&
+           data.text.size() > 0 &&
+           data.text.size() <= 2000 &&
+           data.type in ['user', 'ai'] &&
+           data.timestamp is timestamp;
   }
 }
